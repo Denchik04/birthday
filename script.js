@@ -49,23 +49,23 @@ document.addEventListener("DOMContentLoaded", () => {
     // 3. Дані фотографій (Твої оригінальні підписи)
     // ==========================================
     const photosData = [
-        { file: "photos/2.jpg", text: "Початок..." },
-        { file: "photos/3.jpg", text: "Пам'ятаєш цей вечір?" },
-        { file: "photos/1.jpg", text: "Моя улюблена твоя посмішка" },
-        { file: "photos/4.jpg", text: "Просто ми" },
-        { file: "photos/5.jpg", text: "Ти тут така красива" },
-        { file: "photos/6.jpg", text: "Красівенькі ми" },
-        { file: "photos/7.jpg", text: "Ржем" },
-        { file: "photos/8.jpg", text: "Найтепліші обійми(я тут не оч, але як є)" },
-        { file: "photos/9.jpg", text: "Твої очі..." },
-        { file: "photos/10.jpg", text: "Котики" },
-        { file: "photos/11.jpg", text: "Ніжні моменти" },
-        { file: "photos/12.jpg", text: "Моя мила" },
-        { file: "photos/13.jpg", text: "🥰" },
-        { file: "photos/14.jpg", text: "Моя прекрасана" },
-        { file: "photos/15.jpg", text: "Умнічкою ти теж була)" },
-        { file: "photos/16.jpg", text: "Сердечко намальоване з любов'ю)" },
-        { file: "photos/17.jpg", text: "Далі буде тільки краще ❤️" },
+        { file: "2.jpg", text: "Початок..." },
+        { file: "3.jpg", text: "Пам'ятаєш цей вечір?" },
+        { file: "1.jpg", text: "Моя улюблена твоя посмішка" },
+        { file: "4.jpg", text: "Просто ми" },
+        { file: "5.jpg", text: "Ти тут така красива" },
+        { file: "6.jpg", text: "Красівенькі ми" },
+        { file: "7.jpg", text: "Ржем" },
+        { file: "8.jpg", text: "Найтепліші обійми(я тут не оч, але як є)" },
+        { file: "9.jpg", text: "Твої очі..." },
+        { file: "10.jpg", text: "Котики" },
+        { file: "11.jpg", text: "Ніжні моменти" },
+        { file: "12.jpg", text: "Моя мила" },
+        { file: "13.jpg", text: "🥰" },
+        { file: "14.jpg", text: "Моя прекрасана" },
+        { file: "15.jpg", text: "Умнічкою ти теж була)" },
+        { file: "16.jpg", text: "Сердечко намальоване з любов'ю)" },
+        { file: "17.jpg", text: "Далі буде тільки краще ❤️" },
     ];
 
     // ==========================================
@@ -260,4 +260,5 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
+
 });
