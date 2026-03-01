@@ -1,0 +1,210 @@
+:root {
+    --bg-color: #f8f3f0;
+    --text-dark: #4a4240;
+    --accent: #d4a39b;
+    --glass-bg: rgba(255, 255, 255, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --glass-shadow: 0 8px 32px 0 rgba(138, 114, 110, 0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+    overflow-x: hidden;
+}
+
+/* --- ВСТУПНЕ ВІДЕО --- */
+.intro-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: #000000; z-index: 9999;
+    display: flex; justify-content: center; align-items: center;
+    transition: opacity 1.5s ease-in-out;
+}
+.start-btn {
+    padding: 15px 40px; font-size: 1.2rem; background: transparent;
+    border: 2px solid #fff; color: #fff; border-radius: 30px;
+    cursor: pointer; font-family: 'Montserrat', sans-serif; transition: 0.3s;
+}
+.start-btn:active { transform: scale(0.95); background: #fff; color: #000; }
+#intro-video { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; /* Зберігає твої оригінальні пропорції без розтягування та обрізки */
+    background-color: #000; /* Чорний фон зіллється з краями, якщо відео трохи вужче/коротше за екран */
+}
+.skip-btn {
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    z-index: 10000;
+}
+
+/* --- НОВИЙ ФОН --- */
+.ambient-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background: var(--bg-color); overflow: hidden; }
+.glow { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.7; animation: drift 15s infinite alternate ease-in-out; }
+.sphere-1 { width: 400px; height: 400px; background: #fde8e9; top: -10%; left: -10%; }
+.sphere-2 { width: 500px; height: 500px; background: #f6e6dc; bottom: -20%; right: -10%; animation-delay: -5s; }
+.sphere-3 { width: 300px; height: 300px; background: #fbf5f3; top: 40%; left: 30%; animation-delay: -2s; }
+
+@keyframes drift { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(30px, -30px) scale(1.1); } }
+
+/* --- ОСНОВНІ БЛОКИ --- */
+.glass-section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px 20px; text-align: center; }
+
+.subtitle { font-size: 1rem; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; margin-bottom: 20px; }
+.title { font-family: 'Cormorant Garamond', serif; font-size: 4rem; line-height: 1.1; color: var(--text-dark); }
+.title span { font-style: italic; color: var(--accent); }
+
+.scroll-indicator { margin-top: 60px; font-size: 0.8rem; color: #8a8280; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+.line-down { width: 1px; height: 40px; background-color: var(--accent); animation: stretch 2s infinite ease-in-out; }
+
+/* Ефект Скла */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow);
+    border-radius: 24px; padding: 40px 30px; width: 100%; max-width: 400px;
+}
+
+.poem { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-style: italic; margin-bottom: 20px; color: #5a514f; line-height: 1.6; }
+.poem:last-child { margin-bottom: 0; }
+
+/* --- СЕРЦЕ І ПОДАРУНОК --- */
+.heart-pulse { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.3s; }
+.heart-pulse:active { transform: scale(0.9); }
+.heart-btn { font-size: 70px; color: var(--accent); text-shadow: 0 0 30px rgba(212, 163, 155, 0.6); animation: heartbeat 2s infinite; }
+.hint { margin-top: 10px; font-weight: 500; color: var(--accent); letter-spacing: 1px; }
+
+@keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+/* --- НОВА ГАЛЕРЕЯ --- */
+.gallery-wrapper { padding: 80px 20px; display: flex; flex-direction: column; align-items: center; width: 100%; }
+.gallery-title { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; margin-bottom: 50px; color: var(--text-dark); }
+
+.gallery-track { display: flex; flex-direction: column; gap: 40px; width: 100%; max-width: 450px; }
+
+.photo-card {
+    background: #fff; padding: 12px 12px 20px 12px; border-radius: 8px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.06); transform-origin: center;
+    opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out;
+}
+.photo-card.show { opacity: 1; transform: translateY(0) rotate(var(--rot)); }
+
+.img-box { width: 100%; height: 400px; border-radius: 4px; overflow: hidden; background: #f0eae6; margin-bottom: 15px; }
+.img-box img { width: 100%; height: 100%; object-fit: cover; }
+.caption { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; text-align: center; color: #5a514f; }
+
+/* Утиліти */
+.hidden { display: none !important; }
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity 1s ease-out, transform 1s ease-out; }
+.fade-in.active { opacity: 1; transform: translateY(0); }
+@keyframes stretch { 0%, 100% { height: 20px; opacity: 0.5; } 50% { height: 50px; opacity: 1; } }
+
+/* --- МІНІ-ГРА: СКРЕТЧ-КАРТКА --- */
+.scratch-title { 
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 2rem; 
+    margin-bottom: 20px; 
+    color: var(--text-main, #4a4443); 
+}
+
+.scratch-container {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    height: 220px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 25px;
+    margin: 0 auto; /* Центруємо */
+}
+
+.scratch-content { opacity: 1; pointer-events: none; }
+.secret-text { font-size: 1.1rem; line-height: 1.5; color: #5a514f; }
+.signature { margin-top: 15px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; color: #d4a39b; }
+
+#scratch-canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    cursor: pointer;
+    z-index: 2;
+    transition: opacity 0.8s ease;
+}
+/* --- КАПСУЛА ЧАСУ --- */
+.capsule-panel {
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.capsule-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+}
+.capsule-desc {
+    font-size: 0.95rem;
+    color: #5a514f;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+.capsule-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: var(--text-dark);
+    resize: none;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.capsule-input:focus {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(212, 163, 155, 0.3);
+}
+.send-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+}
+.send-btn:active {
+    transform: scale(0.95);
+}
+.success-msg {
+    color: #d4a39b;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}

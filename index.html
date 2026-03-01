@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Для тебе 🤍</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="intro-overlay" class="intro-overlay">
+        <button id="start-btn" class="start-btn">Натискай тута сонечко і поверни телефончик✨</button>
+        <video id="intro-video" class="hidden" playsinline>
+            <source src="photos/v1.mov" type="video/mp4">
+        </video>
+        <button id="skip-btn" class="skip-btn hidden">Пропустити ⏭️</button>
+    </div>
+
+    <div class="ambient-bg">
+        <div class="glow sphere-1"></div>
+        <div class="glow sphere-2"></div>
+        <div class="glow sphere-3"></div>
+    </div>
+
+    <main id="story-container">
+        <section class="glass-section hero-section fade-in">
+            <p class="subtitle">Моя кохана дівчинко</p>
+            <h1 class="title">Вітаю<br><span>З твоїм днем</span></h1>
+            <div class="scroll-indicator">
+                <p>гортай обережно</p>
+                <div class="line-down"></div>
+            </div>
+        </section>
+
+        <section class="glass-section fade-in">
+            <div class="glass-panel">
+                <p class="poem">
+                    Дівчино, скажу тобі відверто,<br>
+                    Ти не ображайсь за прямоту:<br>
+                    Я люблю тебе таку уперту,<br>
+                    Отаку лукаву і просту.
+                </p>
+                <p class="poem">
+                    Бо коли б зробилася другою,<br>
+                    Хоч на мить скорилася мені,<br>
+                    Я б тоді не бігав за тобою,<br>
+                    Не складав би віршики-пісні.
+                </p>
+                <p class="poem">
+                    Я б на тебе поглядав звисока,<br>
+                    Сам собою чванився б: ось я!<br>
+                    Дівчино кохана, кароока,<br>
+                    Поки непокірна - ти моя.
+                </p>
+            </div>
+        </section>
+
+        <section class="glass-section interactive-section fade-in">
+            <h2 class="scratch-title">Зітри цей шар...</h2>
+        <div class="scratch-container" id="scratch-wrapper">
+            <div class="scratch-content">
+                <p class="secret-text">Пів року — це лише початок нашої історії. Далі буде ще крутіше! ✨</p>
+                <p class="signature">З любов'ю, Капібарка.</p>
+            </div>
+            <canvas id="scratch-canvas"></canvas>
+        </div>
+        </section>
+
+        <section id="gallery-section" class="gallery-wrapper hidden">
+            <h2 class="gallery-title">Наші моменти</h2>
+            <div id="gallery-track" class="gallery-track">
+                </div>
+        </section>
+        <section id="time-capsule" class="glass-section fade-in hidden">
+            <div class="glass-panel capsule-panel">
+                <h2 class="capsule-title">Наша Капсула Часу ⏳</h2>
+                <p class="capsule-desc">Яким ти бачиш наш наступний рік? Напиши свої мрії, плани або просто те, що відчуваєш зараз. Цей лист відправиться мені, і ми прочитаємо його рівно через рік.</p>
+                
+                <textarea id="capsule-text" class="capsule-input" placeholder="Напиши щось особливе... 🤍" rows="4"></textarea>
+                
+                <button id="send-capsule-btn" class="send-btn">Запечатати і відправити ✈️</button>
+                <p id="capsule-success" class="success-msg hidden">Лист успішно запечатано! Чекаємо 02.03.2027 💌</p>
+            </div>
+        </section>
+    </main>
+
+    <audio id="bgMusic" src="romance.mp3" loop></audio>
+    <script src="script.js"></script>
+</body>
+</html>
