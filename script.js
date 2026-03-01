@@ -69,11 +69,11 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     // ==========================================
-    // СИСТЕМА БУФЕРИЗАЦІЇ (ПРЕЛОАДЕР З BLOB ДЛЯ ВІДЕО)
+    // СИСТЕМА БУФЕРИЗАЦІЇ (ТІЛЬКИ ДЛЯ ФОТО)
     // ==========================================
     const loaderOverlay = document.getElementById('loader-overlay');
     let assetsLoaded = 0;
-    const totalAssets = photosData.length + 1; // 17 фото + 1 відео
+    const totalAssets = photosData.length; // Рахуємо тільки фотографії
 
     function assetLoaded() {
         assetsLoaded++;
@@ -81,47 +81,31 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 if (loaderOverlay) {
                     loaderOverlay.style.opacity = '0';
-                    setTimeout(() => loaderOverlay.style.display = 'none', 800);
+                    setTimeout(() => loaderOverlay.style.display = 'none', 500);
                 }
-            }, 500);
+            }, 300);
         }
     }
 
-    // 1. Примусово вантажимо всі фото в кеш
-    photosData.forEach(photo => {
-        const img = new Image();
-        img.onload = assetLoaded;
-        img.onerror = assetLoaded; 
-        img.src = photo.file;
-    });
-
-    // 2. Бронебійне завантаження відео (Fetch Blob)
-    const videoElement = document.getElementById('intro-video');
-    if (videoElement) {
-        // ТУТ МАЄ БУТИ ТОЧНА НАЗВА ВІДЕО, ЯК ВОНО ЛЕЖИТЬ В ПАПЦІ НА GITHUB
-        fetch('v1.mov') 
-            .then(response => response.blob())
-            .then(blob => {
-                // Створюємо локальне посилання на викачане в пам'ять відео
-                const videoUrl = URL.createObjectURL(blob);
-                videoElement.src = videoUrl;
-                assetLoaded(); // Відео повністю завантажено на 100%!
-            })
-            .catch(err => {
-                console.error("Помилка буферизації відео:", err);
-                assetLoaded(); // Пропускаємо далі, якщо щось зламалось
-            });
-
-        // Запобіжник на випадок дуже повільного інтернету (10 секунд)
-        setTimeout(() => {
-            if (assetsLoaded < totalAssets) {
-                assetsLoaded = totalAssets; 
-                assetLoaded();
-            }
-        }, 10000); 
+    // Вантажимо тільки фотографії
+    if (photosData && photosData.length > 0) {
+        photosData.forEach(photo => {
+            const img = new Image();
+            img.onload = assetLoaded;
+            img.onerror = assetLoaded; // Пропускаємо, якщо якась фотка не знайдена
+            img.src = photo.file;
+        });
     } else {
         assetLoaded();
     }
+
+    // Бронебійний запобіжник: через 4 секунди пускаємо на сайт у будь-якому разі
+    setTimeout(() => {
+        if (assetsLoaded < totalAssets) {
+            assetsLoaded = totalAssets; 
+            assetLoaded();
+        }
+    }, 4000);
 
     // ==========================================
     // 4. МІНІ-ГРА: СКРЕТЧ-КАРТА
@@ -317,5 +301,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
