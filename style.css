@@ -207,4 +207,26 @@ body {
     font-weight: 600;
     font-size: 1.1rem;
     margin-top: 10px;
+
+}
+
+/* --- ПРЕЛОАДЕР --- */
+.loader-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: var(--bg-color, #f8f3f0); 
+    z-index: 999999; /* Поверх абсолютно всього */
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    transition: opacity 0.8s ease;
+}
+.loader-heart {
+    font-size: 50px; color: var(--accent, #d4a39b);
+    animation: heartbeat 1.5s infinite; 
+    margin-bottom: 20px;
+}
+.loader-text {
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 1.5rem; color: var(--text-dark, #4a4240); 
+    font-style: italic;
+    text-align: center;
+    padding: 0 20px;
 }
