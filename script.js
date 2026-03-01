@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     // ==========================================
-    // СИСТЕМА БУФЕРИЗАЦІЇ (ПРЕЛОАДЕР)
+    // СИСТЕМА БУФЕРИЗАЦІЇ (ПРЕЛОАДЕР З BLOB ДЛЯ ВІДЕО)
     // ==========================================
     const loaderOverlay = document.getElementById('loader-overlay');
     let assetsLoaded = 0;
@@ -77,14 +77,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function assetLoaded() {
         assetsLoaded++;
-        // Коли завантажилось ВСЕ (або спрацював таймер)
         if (assetsLoaded >= totalAssets) {
             setTimeout(() => {
                 if (loaderOverlay) {
                     loaderOverlay.style.opacity = '0';
                     setTimeout(() => loaderOverlay.style.display = 'none', 800);
                 }
-            }, 500); // Маленька затримка для плавності
+            }, 500);
         }
     }
 
@@ -92,22 +91,34 @@ document.addEventListener("DOMContentLoaded", () => {
     photosData.forEach(photo => {
         const img = new Image();
         img.onload = assetLoaded;
-        img.onerror = assetLoaded; // Якщо якась фотка збилась, не блокуємо сайт
+        img.onerror = assetLoaded; 
         img.src = photo.file;
     });
 
-    // 2. Чекаємо, поки відео підвантажить достатньо даних для відтворення
-    if (introVideo) {
-        introVideo.oncanplaythrough = assetLoaded;
-        introVideo.onerror = assetLoaded;
-        
-        // ЗАПОБІЖНИК: Якщо в неї слабкий інтернет, чекаємо максимум 6 секунд і пускаємо
+    // 2. Бронебійне завантаження відео (Fetch Blob)
+    const videoElement = document.getElementById('intro-video');
+    if (videoElement) {
+        // ТУТ МАЄ БУТИ ТОЧНА НАЗВА ВІДЕО, ЯК ВОНО ЛЕЖИТЬ В ПАПЦІ НА GITHUB
+        fetch('v1.mov') 
+            .then(response => response.blob())
+            .then(blob => {
+                // Створюємо локальне посилання на викачане в пам'ять відео
+                const videoUrl = URL.createObjectURL(blob);
+                videoElement.src = videoUrl;
+                assetLoaded(); // Відео повністю завантажено на 100%!
+            })
+            .catch(err => {
+                console.error("Помилка буферизації відео:", err);
+                assetLoaded(); // Пропускаємо далі, якщо щось зламалось
+            });
+
+        // Запобіжник на випадок дуже повільного інтернету (10 секунд)
         setTimeout(() => {
             if (assetsLoaded < totalAssets) {
-                assetsLoaded = totalAssets; // Штучно кажемо, що все готово
+                assetsLoaded = totalAssets; 
                 assetLoaded();
             }
-        }, 6000);
+        }, 10000); 
     } else {
         assetLoaded();
     }
@@ -306,4 +317,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
