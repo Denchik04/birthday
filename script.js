@@ -69,6 +69,50 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     // ==========================================
+    // СИСТЕМА БУФЕРИЗАЦІЇ (ПРЕЛОАДЕР)
+    // ==========================================
+    const loaderOverlay = document.getElementById('loader-overlay');
+    let assetsLoaded = 0;
+    const totalAssets = photosData.length + 1; // 17 фото + 1 відео
+
+    function assetLoaded() {
+        assetsLoaded++;
+        // Коли завантажилось ВСЕ (або спрацював таймер)
+        if (assetsLoaded >= totalAssets) {
+            setTimeout(() => {
+                if (loaderOverlay) {
+                    loaderOverlay.style.opacity = '0';
+                    setTimeout(() => loaderOverlay.style.display = 'none', 800);
+                }
+            }, 500); // Маленька затримка для плавності
+        }
+    }
+
+    // 1. Примусово вантажимо всі фото в кеш
+    photosData.forEach(photo => {
+        const img = new Image();
+        img.onload = assetLoaded;
+        img.onerror = assetLoaded; // Якщо якась фотка збилась, не блокуємо сайт
+        img.src = photo.file;
+    });
+
+    // 2. Чекаємо, поки відео підвантажить достатньо даних для відтворення
+    if (introVideo) {
+        introVideo.oncanplaythrough = assetLoaded;
+        introVideo.onerror = assetLoaded;
+        
+        // ЗАПОБІЖНИК: Якщо в неї слабкий інтернет, чекаємо максимум 6 секунд і пускаємо
+        setTimeout(() => {
+            if (assetsLoaded < totalAssets) {
+                assetsLoaded = totalAssets; // Штучно кажемо, що все готово
+                assetLoaded();
+            }
+        }, 6000);
+    } else {
+        assetLoaded();
+    }
+
+    // ==========================================
     // 4. МІНІ-ГРА: СКРЕТЧ-КАРТА
     // ==========================================
     const canvas = document.getElementById('scratch-canvas');
@@ -262,3 +306,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
